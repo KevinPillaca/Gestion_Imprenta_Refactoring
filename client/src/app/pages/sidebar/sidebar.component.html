@@ -1,0 +1,18 @@
+<nav class="sidebar">
+    <div>
+        <img class="logo" src="/imagenes/logo1.png" alt="logo imprenta">
+        <ul>
+            <li><a routerLink="/gestion/productos" routerLinkActive="active">
+                <img src="/iconos/productos.svg" alt="productos" class="icono_menu"> Productos</a></li>
+            <li><a routerLink="/gestion/cotizacion" routerLinkActive="active">
+                <img src="/iconos/cotizacion.svg" alt="cotizacion" class="icono_menu">Cotización</a></li>
+            <li><a routerLink="/gestion/clientes" routerLinkActive="active"> 
+                <img src="/iconos/clientes.svg" alt="cliente" class="icono_menu">clientes</a></li>
+            <li><a routerLink="/gestion/cobranzas" routerLinkActive="active">
+                <img src="/iconos/Cobranzas.svg" alt="cobranzas" class="icono_menu">Cobranzas</a></li>
+            <li><a routerLink="/gestion/contabilidad" routerLinkActive="active"> 
+                <img src="/iconos/contabilidad.svg" alt="contabilidad" class="icono_menu"> Contabilidad</a></li>
+        </ul>
+    </div>
+    <a (click)="cerrarSesion()" class="cerrar_sesion"> <img src="/iconos/cerrar.svg" alt="Cerrar" class="icono_menu"> Cerrar Sesión</a>
+</nav>

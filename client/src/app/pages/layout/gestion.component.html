@@ -1,0 +1,19 @@
+<div class="gestion-container">
+    <!-- Sidebar -->
+    <app-sidebar></app-sidebar>
+
+    <!-- Zona principal -->
+    <div class="main-content" >
+        <img src="/imagenes/fondo2.png" alt="fondo" class="background-image">
+        
+        <!-- Header -->
+        <header class="header">
+            <h1>{{ titulo }}</h1>
+        </header>
+
+        <!-- Contenido dinámico -->
+        <section class="content">
+            <router-outlet></router-outlet>
+        </section>
+    </div>
+</div>

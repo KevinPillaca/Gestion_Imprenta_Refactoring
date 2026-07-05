@@ -1,0 +1,53 @@
+<div class="modal-overlay">
+
+  <div class="modal-content">
+
+    <button class="btn-close" (click)="cerrarModal()"> ✕ </button>
+
+    <h2>Nuevo Producto</h2>
+
+    <form [formGroup]="productoForm">
+        
+        <label>Nombre</label>
+        <input type="text" formControlName="nombre">
+        @if (errores()['nombre']) { <p class="error">{{ errores()['nombre'] }}</p>}
+
+        <label>Tipo Material</label>
+        <input type="text" formControlName="tipo_material">
+        @if (errores()['tipo_material']) {<p class="error">{{ errores()['tipo_material'] }}</p>}
+
+        <label>Medida</label>
+        <input type="text" formControlName="medida">
+        @if (errores()['medida']) {<p class="error">{{ errores()['medida'] }}</p>}
+
+        <label>Precio</label>
+        <input type="number" formControlName="precio">
+        @if (errores()['precio']) {<p class="error">{{ errores()['precio'] }}</p>}
+
+        <label>Categoría</label>
+        <select formControlName="categoria_id" >
+
+          <option [value]="0" disabled>
+            Seleccione una categoría
+          </option>
+
+          @for (categoria of categorias.value(); track categoria.id) {
+            <option [value]="categoria.id">
+              {{ categoria.nombre }}
+            </option>
+          }
+        </select>
+        @if (errores()['categoria_id']) {<p class="error">{{ errores()['categoria_id'] }}</p>}
+
+        <label>Imagen</label>
+        <input type="file" accept="image/*" (change)="seleccionarImagen($event)">
+        <!-- @if (errores()['imagen']) {<p class="error">{{ errores()['imagen'] }}</p>}  -->
+        @if (errores()['url_imagen']) {<p class="error">{{ errores()['url_imagen'] }}</p>}
+
+        <button type="button" (click)="guardarProducto()"> Guardar </button>
+        @if (errorGeneral()) {<div class="error-general">{{ errorGeneral() }}</div>}
+    </form>
+
+  </div>
+
+</div>

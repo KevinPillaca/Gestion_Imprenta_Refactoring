@@ -1,0 +1,42 @@
+<div class="container_login">
+  <!-- Sección de imagen -->
+  <section class="imagen">
+    <img
+      class="fondo"
+      src="/imagenes/imprentas_digitales.jpg"
+      alt="Imagen de imprenta"
+    />
+    <img class="logo" src="/imagenes/logo1.png" alt="Logo Dig" />
+  </section>
+
+  <!-- Sección del formulario -->
+  <section class="formulario">
+    <div class="formulario_contenido">
+      <h2>Iniciar Sesión</h2>
+
+      <!-- Formulario reactivo -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Usuario -->
+        <div class="input_group">
+          <img src="/iconos/usuario.svg" alt="Ícono usuario" class="icono" />
+          <input type="text" id="usuario" formControlName="usuario" placeholder="Usuario" autocomplete="username" />
+        </div>
+
+        <!-- Contraseña -->
+        <div class="input_group">
+          <img src="/iconos/contraseña.svg" alt="Ícono contraseña" class="icono" />
+          <input type="password" id="contrasena" formControlName="password" placeholder="Contraseña" autocomplete="current-password"/>
+        </div>
+
+        <!-- Botón -->
+        <button class="button" type="submit" [disabled]="loginForm.invalid || cargando"> {{ cargando ? 'Ingresando...' : 'Iniciar' }} </button> <br>
+
+        <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
+        
+        <!-- Enlace de recuperación -->
+        <a class="respaldo" href="#">¿Olvidaste tu contraseña?</a>
+      </form>
+      <button class="prueba">prueba producto</button>
+    </div>
+  </section>
+</div>

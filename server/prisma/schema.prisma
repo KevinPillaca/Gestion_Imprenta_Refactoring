@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model administrador {
+  id       Int    @id @default(autoincrement())
+  usuario  String @db.VarChar(50)
+  password String @db.VarChar(255)
+}
+
+model categorias {
+  id        Int         @id @default(autoincrement())
+  nombre    String      @unique(map: "nombre") @db.VarChar(50)
+  productos productos[]
+}
+
+model clientes {
+  cliente_id          Int                   @id @default(autoincrement())
+  nombre_razon_social String                @db.VarChar(150)
+  ruc_dni             String                @unique(map: "ruc_dni") @db.VarChar(20)
+  telefono            String?               @db.VarChar(20)
+  correo              String?               @db.VarChar(100)
+  direccion           String?               @db.VarChar(255)
+  departamento        String?               @db.VarChar(50)
+  fecha_registro      DateTime?             @default(now()) @db.Timestamp(0)
+  cobranzas           cobranzas[]
+  contabilidad_ventas contabilidad_ventas[]
+  cotizaciones        cotizaciones[]
+}
+
+model cobranza_abonos {
+  abono_id      Int                          @id @default(autoincrement())
+  cobranza_id   Int
+  fecha_pago    DateTime?                    @default(now()) @db.Timestamp(0)
+  monto_abonado Decimal                      @db.Decimal(10, 2)
+  metodo_pago   cobranza_abonos_metodo_pago? @default(Efectivo)
+  nota_pago     String?                      @db.VarChar(255)
+  cobranzas     cobranzas                    @relation(fields: [cobranza_id], references: [cobranza_id], onDelete: Cascade, map: "fk_abono_cobranza")
+
+  @@index([cobranza_id], map: "fk_abono_cobranza")
+}
+
+model cobranzas {
+  cobranza_id           Int               @id @default(autoincrement())
+  cliente_id            Int?
+  nombre_cliente_manual String?           @db.VarChar(150)
+  cotizacion_id         Int?
+  fecha_emision         DateTime?         @default(now()) @db.Timestamp(0)
+  concepto              String            @db.VarChar(155)
+  monto_total           Decimal           @db.Decimal(10, 2)
+  monto_pagado          Decimal?          @default(0.00) @db.Decimal(10, 2)
+  monto_pendiente       Decimal           @db.Decimal(10, 2)
+  estado                cobranzas_estado? @default(Pendiente)
+  cobranza_abonos       cobranza_abonos[]
+  clientes              clientes?         @relation(fields: [cliente_id], references: [cliente_id], onDelete: Cascade, map: "fk_cob_cliente")
+  cotizaciones          cotizaciones?     @relation(fields: [cotizacion_id], references: [cotizacion_id], map: "fk_cob_cotizacion")
+
+  @@index([cliente_id], map: "fk_cob_cliente")
+  @@index([cotizacion_id], map: "fk_cob_cotizacion")
+}
+
+model contabilidad_compras {
+  id_compra         Int                                   @id @default(autoincrement())
+  fecha             DateTime                              @db.Date
+  proveedor         String                                @db.VarChar(150)
+  tipo_comprobante  contabilidad_compras_tipo_comprobante
+  serie_comprobante String                                @db.VarChar(20)
+  subtotal          Decimal                               @db.Decimal(10, 2)
+  igv               Decimal                               @db.Decimal(10, 2)
+  total             Decimal                               @db.Decimal(10, 2)
+  mes               Int
+  anio              Int
+}
+
+model contabilidad_ventas {
+  id_venta              Int                                  @id @default(autoincrement())
+  fecha                 DateTime                             @db.Date
+  cliente_id            Int?
+  cliente_nombre_manual String?                              @db.VarChar(150)
+  tipo_comprobante      contabilidad_ventas_tipo_comprobante
+  serie_comprobante     String                               @db.VarChar(20)
+  descripcion           String?                              @db.VarChar(255)
+  subtotal              Decimal                              @db.Decimal(10, 2)
+  igv                   Decimal                              @db.Decimal(10, 2)
+  total                 Decimal                              @db.Decimal(10, 2)
+  mes                   Int
+  anio                  Int
+  clientes              clientes?                            @relation(fields: [cliente_id], references: [cliente_id], map: "fk_cont_cliente")
+
+  @@index([cliente_id], map: "fk_cont_cliente")
+}
+
+model cotizacion_detalle {
+  detalle_id          Int           @id @default(autoincrement())
+  cotizacion_id       Int?
+  producto_id         Int?
+  cantidad            Int
+  descripcion_detalle String?       @db.VarChar(255)
+  precio_unitario     Decimal       @db.Decimal(10, 2)
+  subtotal            Decimal       @db.Decimal(10, 2)
+  cotizaciones        cotizaciones? @relation(fields: [cotizacion_id], references: [cotizacion_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_detalle_cotizacion")
+  productos           productos?    @relation(fields: [producto_id], references: [producto_id], onUpdate: NoAction, map: "fk_detalle_producto")
+
+  @@index([cotizacion_id], map: "fk_detalle_cotizacion")
+  @@index([producto_id], map: "fk_detalle_producto")
+}
+
+model cotizaciones {
+  cotizacion_id      Int                  @id @default(autoincrement())
+  cliente_id         Int?
+  fecha              DateTime?            @default(now()) @db.Timestamp(0)
+  subtotal           Decimal              @db.Decimal(10, 2)
+  igv                Decimal              @db.Decimal(10, 2)
+  total              Decimal              @db.Decimal(10, 2)
+  estado             cotizaciones_estado? @default(Pendiente)
+  cobranzas          cobranzas[]
+  cotizacion_detalle cotizacion_detalle[]
+  clientes           clientes?            @relation(fields: [cliente_id], references: [cliente_id], onUpdate: NoAction, map: "fk_cotizacion_cliente")
+
+  @@index([cliente_id], map: "fk_cotizacion_cliente")
+}
+
+model productos {
+  producto_id        Int                  @id @default(autoincrement())
+  nombre             String               @db.VarChar(100)
+  tipo_material      String               @db.VarChar(255)
+  medida             String?              @db.VarChar(50)
+  precio             Decimal?             @db.Decimal(10, 2)
+  url_imagen         String?              @db.VarChar(255)
+  categoria_id       Int?
+  cotizacion_detalle cotizacion_detalle[]
+  categorias         categorias?          @relation(fields: [categoria_id], references: [id], map: "productos_ibfk_1")
+
+  @@index([categoria_id], map: "categoria_id")
+}
+
+enum contabilidad_compras_tipo_comprobante {
+  Factura
+  Boleta
+  Recibo
+}
+
+enum cobranza_abonos_metodo_pago {
+  Efectivo
+  Transferencia
+  Yape_Plin     @map("Yape/Plin")
+  Tarjeta
+}
+
+enum contabilidad_ventas_tipo_comprobante {
+  Factura
+  Boleta
+  Nota_de_Venta @map("Nota de Venta")
+}
+
+enum cotizaciones_estado {
+  Pendiente
+  Aceptado
+  Rechazado
+}
+
+enum cobranzas_estado {
+  Pendiente
+  Adelanto
+  Cancelado
+}

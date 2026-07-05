@@ -1,0 +1,70 @@
+<div class="modal-overlay">
+
+  <div class="modal-content">
+
+    <button class="btn-close" (click)="modalDetalles.set(false)"> ✕ </button>
+
+    <h2>Detalles de Producto</h2>
+
+    <form [formGroup]="productoForm">
+        
+        <label>Nombre</label>
+        <input type="text" formControlName="nombre">
+        @if (errores()['nombre']) {
+          <span class="error-text">{{ errores()['nombre'] }}</span>
+        }
+
+        <label>Tipo Material</label>
+        <input type="text" formControlName="tipo_material" >
+        @if (errores()['tipo_material']) {
+          <span class="error-text">{{ errores()['tipo_material'] }}</span>
+        }
+
+        <label>Medida</label>
+        <input type="text" formControlName="medida" >
+        @if (errores()['medida']) {
+          <span class="error-text">{{ errores()['medida'] }}</span>
+        }
+
+        <label>Precio</label>
+        <input type="number" formControlName="precio" >
+        @if (errores()['precio']) {
+          <span class="error-text">{{ errores()['precio'] }}</span>
+        }
+
+        <label>Categoría</label>
+        <select formControlName="categoria_id">
+          <option value="0" disabled [selected]="!producto().categoria_id">
+            Seleccione una categoría
+          </option>
+          
+          @if (producto().categoria_id) {
+            <option [value]="producto().categoria_id" selected>
+              {{ producto().categorias?.nombre || 'Sin categoría' }}
+            </option>
+          }
+        </select>
+
+      <!--  <label>Imagen Cambiar</label>
+        <div style="border: 1px solid #ccc; padding: 10px; border-radius: 4px; background-color: #f9f9f9;">
+          <span style="display: block; font-size: 13px; margin-bottom: 5px; color: #555;">
+            Seleccione si desea cambiar la imagen:
+          </span>
+          <input type="file" accept="image/*" >
+        </div>
+      -->
+
+        <div class="button_detalles">
+            <button type="button" class="btn-eliminar" (click)="eliminar()"> Eliminar</button>
+            <button type="button" class="btn-modificar" (click)="activarEdicion()"> Modificar</button>
+            <button type="button" class="btn-guardar" (click)="actualizar()" [disabled]="productoForm.invalid"> Guardar </button>
+        </div>
+    </form>
+
+    @if (errorGeneral()) {
+      <p class="error-general">{{ errorGeneral() }}</p>
+    }
+    
+  </div>
+
+</div>

@@ -1,0 +1,10 @@
+# Bloquear dependencias en cualquier nivel por seguridad
+**/node_modules/
+
+# Bloquear archivos de entorno globales o locales
+**/.env
+.env
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db

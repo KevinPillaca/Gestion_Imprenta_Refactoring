@@ -1,0 +1,27 @@
+
+// Stylo de Boton
+@mixin button-color($bg) {
+  background-color: $bg;
+  color: #ffffff;
+
+  &:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+}
+
+//Estructura del Boton 
+@mixin button-base {
+  padding: 12px 37px; // fijo
+  border: none;
+  border-radius: 6px;
+
+  cursor: pointer;
+}
+
+//Centrado flex
+@mixin centrado-total {
+  display: flex;
+  justify-content: center; // Centra horizontal
+  align-items: center;     // Centra vertical
+}

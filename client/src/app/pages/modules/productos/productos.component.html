@@ -1,0 +1,50 @@
+<main>
+    <button class="button" (click)="abrirModal()"> agregar producto</button>
+
+     @if (productos.isLoading()) {
+    <p>Cargando catálogo de productos...</p>
+  }
+
+    <section class="productos">
+
+      @for(producto of productos.value(); track producto.producto_id) {
+
+        <article class="card">
+
+          <img
+            [src]="'http://localhost:3000' + producto.url_imagen"
+            [alt]="producto.nombre"
+          >
+
+          <h3>{{ producto.nombre }}</h3>
+
+          <p>{{ producto.tipo_material }}</p>
+
+          <p>{{ producto.medida }}</p>
+
+          <strong>S/. {{ producto.precio }}</strong>
+
+          <button (click)="abrirDetalles(producto)"> Detalles</button>
+          
+        </article>
+        
+      }
+
+    </section>
+</main>
+
+<!-- frenderiza el moda si es true -->
+ @if (modalAgregar()) {
+    <app-agregar-producto
+      [(modalAgregar)]="modalAgregar"
+      (productoCreado)="recargarProductos()"
+     />
+  }
+
+  @if (modalDetalles()) {
+    <app-detalles-productos
+     [(modalDetalles)]="modalDetalles"
+     [producto]="productoSeleccionado()!"
+     (productoEditado)="recargarProductos()"
+    />
+  }
