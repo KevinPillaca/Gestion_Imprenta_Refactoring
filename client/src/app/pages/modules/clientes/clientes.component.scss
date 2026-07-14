@@ -1,0 +1,214 @@
+.clientes {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+    width: 100%;
+}
+
+/* ===========================
+   TOOLBAR
+=========================== */
+
+.clientes__toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.clientes__search {
+    flex: 1;
+
+    input {
+        width: 100%;
+        height: 52px;
+        padding: 0 20px;
+        border: 1px solid #e8edf3;
+        border-radius: 14px;
+        outline: none;
+        font-size: .95rem;
+        background: #fff;
+        transition: .25s;
+
+        &:focus {
+            border-color: #1b5fa8;
+            box-shadow: 0 0 0 4px rgba(27,95,168,.12);
+        }
+    }
+}
+
+.clientes__actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    height: 52px;
+    padding: 0 24px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: .95rem;
+    font-weight: 600;
+    transition: .25s;
+}
+
+.btn-secondary {
+    background: white;
+    color: #174d87;
+    border: 1px solid #dde5ef;
+
+    &:hover {
+        background: #f5f8fc;
+    }
+}
+
+.btn-primary {
+    background: #174d87;
+    color: white;
+
+    &:hover {
+        background: #103b69;
+    }
+}
+
+/* ===========================
+   CARD TOTAL
+=========================== */
+
+.clientes__summary {
+    display: flex;
+}
+
+.summary-card {
+    width: 220px;
+    background: white;
+    border-radius: 18px;
+    padding: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,.06);
+}
+
+.summary-card__icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: #edf5fd;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1.3rem;
+}
+
+.summary-card__content {
+
+    span {
+        display: block;
+        font-size: .82rem;
+        color: #8d97a8;
+        margin-bottom: .3rem;
+    }
+
+    h3 {
+        margin: 0;
+        font-size: 1.6rem;
+        color: #1f2f46;
+    }
+
+}
+
+/* ===========================
+   TABLA
+=========================== */
+
+.clientes__table {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f7f9fc;
+
+    th {
+        padding: 20px;
+        text-align: left;
+        font-size: .88rem;
+        color: #275384;
+        font-weight: 700;
+    }
+}
+
+tbody {
+
+    tr {
+        transition: .2s;
+
+        &:hover {
+            background: #f8fbff;
+        }
+    }
+
+    td {
+        padding: 18px 20px;
+        border-top: 1px solid #eef2f7;
+        font-size: .92rem;
+        color: #556070;
+    }
+
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+
+.clientes__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+        color: #7c8899;
+        font-size: .9rem;
+    }
+}
+
+/* ===========================
+   PAGINACION
+=========================== */
+
+.clientes__pagination {
+    display: flex;
+    justify-content: flex-end;
+    gap: .5rem;
+
+    button {
+        width: 38px;
+        height: 38px;
+        border: none;
+        background: white;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: .25s;
+
+        &:hover {
+            background: #174d87;
+            color: white;
+        }
+    }
+
+    .active {
+        background: #174d87;
+        color: white;
+    }
+}

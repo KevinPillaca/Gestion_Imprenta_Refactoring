@@ -1,1 +1,116 @@
-<p>clientes works!</p>
+<section class="clientes">
+
+    <!-- Toolbar -->
+    <div class="clientes__toolbar">
+
+        <!-- Buscador -->
+        <div class="clientes__search">
+            <input
+                type="text"
+                placeholder="Buscar clientes..."
+                (input)="onBuscar($event)"
+            >
+        </div>
+
+        <!-- Acciones -->
+        <div class="clientes__actions">
+            <button type="button" class="btn btn-secondary">
+                Exportar
+            </button>
+
+            <button type="button" class="btn btn-primary">
+                Nuevo Cliente
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Resumen -->
+    <div class="clientes__summary">
+
+        <div class="summary-card">
+
+            <div class="summary-card__icon">
+                👥
+            </div>
+
+            <div class="summary-card__content">
+                <span>Total Clientes</span>
+                <h3>{{ totalClientes() }}</h3>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Tabla -->
+    <div class="clientes__table">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Nombre / Razón Social</th>
+                    <th>RUC/DNI</th>
+                    <th>Teléfono</th>
+                    <th>Correo</th>
+                    <th>Dirección</th>
+                    <th>Departamento</th>
+                    <th>Acciones</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+                @for (cliente of clientes(); track cliente.cliente_id) {
+                <tr>
+
+                    <td>{{ cliente.nombre_razon_social }}</td>
+
+                    <td>{{ cliente.ruc_dni }}</td>
+
+                    <td>{{ cliente.telefono }}</td>
+
+                    <td>{{ cliente.correo }}</td>
+
+                    <td>{{ cliente.direccion }}</td>
+
+                    <td>{{ cliente.departamento }}</td>
+
+                    <td>
+                        Editar | Eliminar
+                    </td>
+
+                </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="clientes__footer">
+
+        <span>
+            Mostrando 1 - 10 de 1,284 clientes
+        </span>
+
+        <div class="clientes__pagination">
+
+            <button>&lt;</button>
+
+            <button class="active">1</button>
+
+            <button>2</button>
+
+            <button>3</button>
+
+            <button>&gt;</button>
+
+        </div>
+
+    </div>
+
+</section>

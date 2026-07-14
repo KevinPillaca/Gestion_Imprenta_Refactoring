@@ -18,8 +18,27 @@ export class ClienteService {
     };
 
     //MOSTRAR CLIENTE
-    public async ShowCliente(){
-        return prisma.clientes.findMany();
+    public async ShowCliente(buscar?:string){
+        
+        const where = buscar
+           
+       ?{
+            OR: [
+                {
+                    nombre_razon_social: {
+                        contains: buscar
+                    }
+                },
+                {
+                    ruc_dni: {
+                        contains: buscar
+                    }
+                }
+            ]
+        }
+        : {};
+
+        return prisma.clientes.findMany({where});
     };
 
     //EDITAR CLIENTE
@@ -35,5 +54,10 @@ export class ClienteService {
         return prisma.clientes.delete({ 
             where: { cliente_id: id } 
         });
+    };
+
+    //TOTAL CLIENTE
+    public async CountCliente(){
+        return prisma.clientes.count();
     };
 }

@@ -9,7 +9,7 @@ export const ProductoSchema = z.object({
     tipo_material: z.string()
         .min(4, "El nombre debe tener al menos 4 caracteres"),
     
-    medida: z.string()
+    medida: z.string() 
         .min(1, "la medida no puede estar vacio"),
     
     precio: z.coerce.number()

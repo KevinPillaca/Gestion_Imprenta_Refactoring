@@ -4,7 +4,7 @@ export const CreateClienteSchema = z.object({
   // Solo letras (incluyendo espacios y tildes)
   nombre_razon_social: z.string()
     .min(3, "El nombre debe tener al menos 3 caracteres")
-    .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/, "El nombre solo puede contener letras"),
+    .regex(/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.,&]+$/, "El nombre contiene caracteres no permitidos"),
 
   // Solo números entre 8 y 11 dígitos
   ruc_dni: z.string()

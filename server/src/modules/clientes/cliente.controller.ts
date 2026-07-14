@@ -17,7 +17,7 @@ export class ClienteController extends BaseController{
     public Create = async ({body}: Request, res:Response) => {
         try{
             const newCliente = await this.ClienteService.CreateCliente(body);
-            return res.status(200).json({message: "Producto creado exitosamente"});
+            return res.status(200).json({message: "cliente creado exitosamente"});
         }
         catch (error){
             return this.handleError(res, error, "Error al Crear el Cliente");
@@ -25,13 +25,11 @@ export class ClienteController extends BaseController{
     };
     
      //Listar Cliente(GET)
-    public show = async (_req: Request, res:Response) => {
+    public show = async (req: Request, res:Response) => {
         try{
-            const clientes = await this.ClienteService.ShowCliente();
-            return res.status(200).json({
-                ok: true,
-                data:clientes
-            });
+            const buscar = (req.query.buscar as string | undefined)?.trim();
+            const clientes = await this.ClienteService.ShowCliente(buscar);
+            return res.status(200).json(clientes);
         }
         catch (error){
              return this.handleError(res, error, "Error al Procesar Clientes");
@@ -70,4 +68,18 @@ export class ClienteController extends BaseController{
         }
     };
 
+    //Total de Clientes (GET)
+    public count = async (_req: Request, res: Response) => {
+        try {
+
+            const total = await this.ClienteService.CountCliente();
+
+            return res.status(200).json({total});
+
+        } catch (error) {
+
+            return this.handleError(res, error, "Error al obtener el total de clientes");
+
+        }
+    };
 };
