@@ -18,10 +18,9 @@ export class ClienteService {
     };
 
     //MOSTRAR CLIENTE
-    public async ShowCliente(buscar?:string){
+    public async ShowCliente(buscar?: string, page: number = 1, limit: number = 8){
         
-        const where = buscar
-           
+        const where = buscar  
        ?{
             OR: [
                 {
@@ -38,7 +37,12 @@ export class ClienteService {
         }
         : {};
 
-        return prisma.clientes.findMany({where});
+        const skip = (page - 1) * limit;
+        const clientes = await prisma.clientes.findMany({where, skip, take: limit});
+        const total = await prisma.clientes.count({where});
+        const totalPages = Math.ceil(total / limit);
+
+        return { data: clientes, total, page, limit, totalPages};
     };
 
     //EDITAR CLIENTE
@@ -60,4 +64,5 @@ export class ClienteService {
     public async CountCliente(){
         return prisma.clientes.count();
     };
+    
 }

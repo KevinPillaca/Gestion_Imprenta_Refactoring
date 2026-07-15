@@ -24,3 +24,11 @@ export interface ApiResponse{
 export interface TotalClientes {
     total: number;
 }
+
+export interface ClienteResponse {
+    data: cliente[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+}

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { cliente,CreateCliente,ApiResponse,TotalClientes } from '../models/clientes.interface';
+import { cliente,CreateCliente,ApiResponse,ClienteResponse,TotalClientes} from '../models/clientes.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +13,15 @@ export class ClientesService {
   private API_URL = 'http://localhost:3000/api/clientes';
 
   //GET CLIENTES
-  getClientes(buscar?: string):Observable<cliente[]>{
+  getClientes(buscar?: string, page:number = 1, limit: number = 8):Observable<ClienteResponse>{
 
-    let params = new HttpParams();
-
+    let params = new HttpParams().set('page', page).set('limit', limit);
+    
     if (buscar) {
       params = params.set('buscar', buscar);
     }
 
-    return this.http.get<cliente[]>(this.API_URL,{params});
+    return this.http.get<ClienteResponse>(this.API_URL,{params});
   };
 
   //POST CLIENTES
@@ -36,6 +36,5 @@ export class ClientesService {
   getTotalCliente():Observable<TotalClientes>{
     return this.http.get<TotalClientes>(`${this.API_URL}/total`);
   };
-
 
 }

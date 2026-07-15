@@ -94,20 +94,30 @@
     <div class="clientes__footer">
 
         <span>
-            Mostrando 1 - 10 de 1,284 clientes
+              Mostrando {{ inicio() }} - {{ fin() }} de {{ totalResultados() }} clientes
         </span>
 
         <div class="clientes__pagination">
 
-            <button>&lt;</button>
+            <button
+                (click)="cambiarPagina(page() - 1)"
+                [disabled]="page() === 1">
+                &lt;
+            </button>
 
-            <button class="active">1</button>
+            @for (pagina of paginas(); track pagina) {
+                <button
+                    [class.active]="page() === pagina"
+                    (click)="cambiarPagina(pagina)">
+                    {{ pagina }}
+                </button>
+            }
 
-            <button>2</button>
-
-            <button>3</button>
-
-            <button>&gt;</button>
+            <button
+                (click)="cambiarPagina(page() + 1)"
+                [disabled]="page() === totalPages()">
+                &gt;
+            </button>
 
         </div>
 
