@@ -14,11 +14,11 @@
 
         <!-- Acciones -->
         <div class="clientes__actions">
-            <button type="button" class="btn btn-secondary">
+            <button type="button" class="btn btn-secondary" (click)="exportarClientes()">
                 Exportar
             </button>
 
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="btn btn-primary" (click)="abrirModal()">
                 Nuevo Cliente
             </button>
         </div>
@@ -124,3 +124,10 @@
     </div>
 
 </section>
+
+ @if (modalAgregar()) {
+    <app-agregar-cliente
+      [(modalAgregar)]="modalAgregar"
+      (clienteCreado)="cargarClientes()"
+     />
+  }

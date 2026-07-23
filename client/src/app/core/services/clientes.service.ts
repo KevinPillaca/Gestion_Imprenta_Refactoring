@@ -37,4 +37,9 @@ export class ClientesService {
     return this.http.get<TotalClientes>(`${this.API_URL}/total`);
   };
 
+  //GET EXPORTAR EXCEL
+  exportClientes(): Observable<Blob>{
+    return this.http.get(`${this.API_URL}/export`,{responseType: 'blob'});
+  };
+
 }

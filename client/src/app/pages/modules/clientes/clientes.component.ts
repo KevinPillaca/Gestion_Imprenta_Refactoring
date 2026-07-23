@@ -4,9 +4,12 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs';
 import { cliente } from '../../../core/models/clientes.interface'
 
+import { AgregarClienteComponent } from './modal-agregar-cliente/agregar-cliente.component';
+
+
 @Component({
   selector: 'app-clientes',
-  imports: [],
+  imports: [AgregarClienteComponent],
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.scss'
 })
@@ -93,5 +96,42 @@ export class ClientesComponent {
 
       });
 
+  }
+
+  //EXPORTAR CLIENTE(BOTON EXECEL)
+  exportarClientes(): void {
+    this.clientesService.exportClientes()
+      .subscribe(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+
+        a.href = url;
+        a.download = 'clientes.xlsx';
+
+        a.click();
+
+        window.URL.revokeObjectURL(url);
+      });
+  }
+
+  //BOTON AGREGAR CLIENTES(POST)
+
+  modalAgregar = signal<boolean>(false);
+
+  //metodo abrir modal (botton)
+  abrirModal() : void {
+    this.modalAgregar.set(true);
+  }
+
+  // 2. Para actualizar las cards llamamos al método signal
+  cargarClientes(): void {
+  this.clientesService
+    .getClientes(this.buscar(), this.page(), this.limit)
+    .subscribe(response => {
+      this.clientes.set(response.data);
+      this.totalPages.set(response.totalPages);
+      this.totalResultados.set(response.total);
+      this.totalClientes.set(response.total);
+    });
   }
 }

@@ -64,5 +64,14 @@ export class ClienteService {
     public async CountCliente(){
         return prisma.clientes.count();
     };
+
+    //EXPORTAR TODOS LOS CLIENTES
+    public async ExportCliente() {
+        return prisma.clientes.findMany({
+            orderBy: {
+                cliente_id: "asc"
+            }
+        });
+    };
     
 }

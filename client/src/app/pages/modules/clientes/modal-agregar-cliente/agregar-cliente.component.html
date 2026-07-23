@@ -1,0 +1,160 @@
+<div class="modal-overlay">
+
+    <div class="modal">
+
+        <!-- Header -->
+        <div class="modal__header">
+
+            <h2>Agregar Cliente</h2>
+
+            <button
+                type="button"
+                class="modal__close"
+                (click)="modalAgregar.set(false)">
+                &times;
+            </button>
+
+        </div>
+
+        <!-- Formulario -->
+        <form class="modal__form" [formGroup]="clienteForm">
+
+            <!-- Nombre / Razón Social -->
+            <div class="form-group">
+
+                <label for="nombre_razon_social">
+                    Nombre / Razón Social
+                </label>
+
+                <input
+                    type="text"
+                    id="nombre_razon_social"
+                    formControlName="nombre_razon_social"
+                    placeholder="Ingrese nombre o razón social"
+                >
+                @if (errores()['nombre_razon_social']) { <p class="error"> {{ errores()['nombre_razon_social'] }} </p>}
+            </div>
+            
+            <!-- RUC / DNI -->
+            <div class="form-group">
+
+                <label for="ruc_dni">
+                    RUC / DNI
+                </label>
+
+                <input
+                    type="text"
+                    id="ruc_dni"
+                    formControlName="ruc_dni"
+                    placeholder="Ingrese RUC o DNI"
+                >
+                @if (errores()['ruc_dni']) {
+                    <p class="error">
+                        {{ errores()['ruc_dni'] }}
+                    </p>
+                }
+
+            </div>
+
+            <!-- Teléfono -->
+            <div class="form-group">
+
+                <label for="telefono">
+                    Teléfono
+                </label>
+
+                <input
+                    type="text"
+                    id="telefono"
+                    formControlName="telefono"
+                    placeholder="Ingrese número de teléfono"
+                >
+                @if (errores()['telefono']) {
+                    <p class="error">{{ errores()['telefono'] }}</p>
+                }
+            </div>
+
+            <!-- Correo -->
+            <div class="form-group">
+
+                <label for="correo">
+                    Correo electrónico
+                </label>
+
+                <input
+                    type="email"
+                    id="correo"
+                    formControlName="correo"
+                    placeholder="Ingrese correo electrónico"
+                >
+                @if (errores()['correo']) {
+                    <p class="error">{{ errores()['correo'] }}</p>
+                }
+            </div>
+
+            <!-- Dirección -->
+            <div class="form-group">
+
+                <label for="direccion">
+                    Dirección
+                </label>
+
+                <input
+                    type="text"
+                    id="direccion"
+                    formControlName="direccion"
+                    placeholder="Ingrese dirección"
+                >
+                @if (errores()['direccion']) {
+                    <p class="error">{{ errores()['direccion'] }}</p>
+                }
+            </div>
+
+            <!-- Departamento -->
+            <div class="form-group">
+
+                <label for="departamento">
+                    Departamento
+                </label>
+
+                <input
+                    type="text"
+                    id="departamento"
+                    formControlName="departamento"
+                    placeholder="Ingrese departamento"
+                >
+                @if (errores()['departamento']) {
+                    <p class="error">{{ errores()['departamento'] }}</p>
+                }
+
+            </div>
+
+            <!-- Acciones -->
+            <div class="modal__actions">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    (click)="modalAgregar.set(false)">
+                    Cancelar
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                    (click)="guardarCliente()">
+                    
+                    Guardar Cliente
+                </button>
+
+            </div>
+            @if (errorGeneral()) {
+                <div class="error-general">
+                    {{ errorGeneral() }}
+                </div>
+            }
+        </form>
+
+    </div>
+
+</div>

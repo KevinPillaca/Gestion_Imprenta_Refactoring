@@ -15,4 +15,6 @@ router.delete("/:id", AuthMiddleware.validateJWT,(req, res) => controller.delete
 
 router.get("/total", AuthMiddleware.validateJWT,(req, res) => controller.count(req, res));
 
+router.get("/export", AuthMiddleware.validateJWT, (req, res) => controller.exportExcel(req, res));
+
 export { router as ClienteRouter};

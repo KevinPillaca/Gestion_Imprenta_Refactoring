@@ -16,26 +16,22 @@ export const CreateClienteSchema = z.object({
   telefono: z.string()
     .length(9, "El teléfono debe tener exactamente 9 dígitos")
     .regex(/^\d+$/, "El teléfono solo debe contener números")
-    .optional()
     .or(z.literal("")),
 
   // Formato email estricto
   correo: z.string()
     .email("El formato del correo no es válido")
-    .optional()
-    .or(z.literal("")),
+    .or(z.literal("")), 
 
   // Letras y números (ideal para direcciones)
   direccion: z.string()
     .min(5, "Dirección muy corta")
     .regex(/^[a-zA-Z0-9\s.,#-]+$/, "Dirección con caracteres no permitidos")
-    .optional()
     .or(z.literal("")),
 
   // Solo letras para el departamento
   departamento: z.string()
     .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/, "El departamento solo debe contener letras")
-    .optional()
     .or(z.literal("")),
 });
 

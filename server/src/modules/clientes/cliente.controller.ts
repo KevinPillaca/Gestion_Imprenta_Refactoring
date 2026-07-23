@@ -1,7 +1,7 @@
 import { Request,Response } from "express";
 import { ClienteService } from "./cliente.service";
 import { BaseController } from "../../shared/error.catch";
-
+import { exportClientesExcel } from "../../shared/excel/export.clientes";
 
 
 export class ClienteController extends BaseController{
@@ -83,5 +83,22 @@ export class ClienteController extends BaseController{
             return this.handleError(res, error, "Error al obtener el total de clientes");
 
         }
+    };
+
+    // EXPORTAR CLIENTES (GET)
+    public exportExcel = async (_req: Request, res: Response) => {
+
+        try {
+
+            const clientes = await this.ClienteService.ExportCliente();
+
+            await exportClientesExcel(clientes, res);
+
+        } catch (error) {
+
+            return this.handleError( res, error, "Error al exportar los clientes");
+
+        }
+
     };
 };
